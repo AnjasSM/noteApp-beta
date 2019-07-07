@@ -47,10 +47,7 @@ class Home extends Component {
     }
 
     _onRefresh = () => {
-        this.setState({refreshing: true});
-        this.fetchData().then(() => {
-            this.setState({refreshing: false});
-        });
+        this.fetchData()
       }
 
     _keyExtractor = (item, index) => item.id.toString();
@@ -101,8 +98,8 @@ class Home extends Component {
                 <ScrollView
                     refreshControl={
                         <RefreshControl
-                          refreshing={this.state.refreshing}
-                          onRefresh={this._onRefresh}
+                          refreshing={this.props.notes.isLoading}
+                          onRefresh={this.fetchData}
                         />
                     }
                 >
@@ -125,13 +122,10 @@ class Home extends Component {
                                     />
                                 )
                             }
-                            refreshing={this.props.notes.isLoading}
-                            onRefresh={this.fetchData}
                         />
                     </View>
                 </ScrollView>
                 <Fabs press={this.toAddNote}/>
-
             </Container>
         );
     }

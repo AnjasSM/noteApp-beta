@@ -26,6 +26,6 @@ export const updateCategory = (data) => {
 export const deleteCategory = (id) => {
     return {
         type: "DELETE_CATEGORY",
-        payload: axios.post(`${urlCategories}/${id}`)
+        payload: axios.delete(`${urlCategories}/${id}`)
     }
 };

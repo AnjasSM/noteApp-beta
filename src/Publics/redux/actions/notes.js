@@ -19,13 +19,13 @@ export const addNote = (data) => {
 export const deleteNote = (id) => {
     return {
         type: "DELETE_NOTE",
-        payload: axios.post(`${urlNotes }/${id}`)
+        payload: axios.delete(`${urlNotes }/${id}`)
     }
 }
 
 export const updateNote = (id, data) => {
     return {
         type: "UPDATE_NOTE",
-        payload: axios.post(`${urlNotes }/${id}`, data)
+        payload: axios.patch(`${urlNotes }/${id}`, data)
     }
 }
