@@ -14,4 +14,18 @@ export const addCategory = (data) => {
         type: "ADD_CATEGORY",
         payload: axios.post(urlCategories, data)
     }
-}
+};
+
+export const updateCategory = (data) => {
+    return {
+        type: "ADD_CATEGORY",
+        payload: axios.patch(urlCategories, data)
+    }
+};
+
+export const deleteCategory = (id) => {
+    return {
+        type: "DELETE_CATEGORY",
+        payload: axios.post(`${urlCategories}/${id}`)
+    }
+};

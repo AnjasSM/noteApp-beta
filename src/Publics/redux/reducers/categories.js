@@ -14,7 +14,7 @@ export default categories = (state = initialState, action) => {
                 ...state,
                 isLoading: true
             }
-        case 'GET_CATEGORY_REJECTED':
+        case 'GET_CATEGORIES_REJECTED':
         case 'ADD_CATEGORY_REJECTED':
         case 'DELETE_CATEGORY_REJECTED':
             return {
@@ -26,8 +26,6 @@ export default categories = (state = initialState, action) => {
             return {
                 data: action.payload.data.data
             }
-
-        
         case 'ADD_CATEGORY_FULFILLED':
             return {
                 ...state,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView, FlatList, Modal } from 'react-native';
+import { StyleSheet, TouchableOpacity, ScrollView, FlatList, Modal, RefreshControl, Alert } from 'react-native';
 import { View, Text, Container } from 'native-base';
-import { fetch } from '../Publics/redux/actions/notes';
+import { fetch, deleteNote } from '../Publics/redux/actions/notes';
 import { connect } from 'react-redux';
 import Fabs from '../Components/Fabs';
 import Search from '../Components/Search';
@@ -10,6 +10,15 @@ import AppHeaders from '../Components/AppHeaders';
 import moment from 'moment';
 
 class Home extends Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            modalVisible: false,
+            refreshing: false
+        }
+    }
+    
     toEditNote = () => {
         const { navigation } = this.props;
         navigation.navigate('EditNote');
@@ -37,14 +46,29 @@ class Home extends Component {
         this.fetchData();
     }
 
-    constructor(props){
-        super(props);
-        this.state = {
-            modalVisible: false
-        }
-    }
+    _onRefresh = () => {
+        this.setState({refreshing: true});
+        this.fetchData().then(() => {
+            this.setState({refreshing: false});
+        });
+      }
 
     _keyExtractor = (item, index) => item.id.toString();
+
+    deleteNoteApi(id) {
+        Alert.alert("Alert", 'Are you sure to delete note : ' + id, [
+            {
+                text: 'cancel'
+            },
+            {
+                text: 'ok',
+                onPress: () => {
+                    this.props.dispatch(deleteNote(id));
+                    this.fetchData()
+                }
+            }
+        ]);
+    }
 
     render() {
         return (
@@ -63,14 +87,10 @@ class Home extends Component {
                     onPress={() => { this.setModal(!this.state.modalVisible); }} >    
                         <View style={{ paddingRight: 15, paddingLeft: 200, paddingTop: 50 }}>
                             <View style={styles.modal}>
-                                <TouchableOpacity onPress={() => { 
-                                    this.fetchData('','asc')
-                                    }} >
+                                <TouchableOpacity onPress={() => { this.fetchData('','ASC') }} >
                                     <Text style={{padding: 8}}>ASCENDING</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => { 
-                                    this.fetchData('','desc')
-                                    }} >
+                                <TouchableOpacity onPress={() => { this.fetchData('','DESC') }} >
                                     <Text style={{padding: 8}}>DESCENDING</Text>
                                 </TouchableOpacity>
                             </View> 
@@ -78,20 +98,30 @@ class Home extends Component {
                     </TouchableOpacity>
                 </Modal>
                 <Search />
-                <ScrollView>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                          refreshing={this.state.refreshing}
+                          onRefresh={this._onRefresh}
+                        />
+                    }
+                >
                     <View style={styles.content}>
                         <FlatList
                             numColumns={2}
+                            onEndReachedThreshold={0.1}    
                             data={this.props.notes.data}
                             keyExtractor={this._keyExtractor}
                             renderItem={
                                 ({ item, index }) => (
                                     <Cards
+                                        longPress={() => this.deleteNoteApi(item.id)}
                                         press={this.toEditNote}
                                         date={moment(item.time).format("D MMMM")}
                                         title={item.title}
                                         category={item.category}
                                         content={item.note}
+                                        color={item.color}
                                     />
                                 )
                             }

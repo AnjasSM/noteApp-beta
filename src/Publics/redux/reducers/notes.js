@@ -1,5 +1,6 @@
 const initialState = {
     notes: [],
+    id:0,
     isLoading: false,
     isFinish: false,
     isError: false,
@@ -31,13 +32,30 @@ export default notes = (state = initialState, action) => {
                 isFinish: true,
                 data: action.payload.data.data
             }
-        
         case 'ADD_NOTE_FULFILLED':
             return {
                 ...state,
                 isLoading: false,
                 isFinish: true,
-                notes: [...state.notes, action.payload.data]
+                notes:[...state.notes, action.payload.data]
+            }
+        // case 'UPDATE_NOTES_FULFILLED':
+        //     let responId = action.payload.data.values.data[0];
+        //     state.data.map(function (item, key, array) {
+        //         if (item.id === responId.id) {
+        //             array[key] = responId
+        //         }
+        //     });
+        //     return {
+        //         ...state,
+        //         isLoading: false
+        //     };
+        
+        case 'DELETE_NOTE_FULFILLED':
+            return {
+                ...state,
+                isLoading: false,
+                data: [...state]
             }
         default:
             return state;

@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 class AppHeader extends Component {
     render() {
-        const { title, leftPress, rightPress,headerName } = this.props
+        const { title, leftPress, rightPress, headerName } = this.props
         return (
             <Header style={styles.header}>
                 <View>

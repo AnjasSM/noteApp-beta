@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { NavigationActions } from 'react-navigation';
-import { StyleSheet, TouchableOpacity, ScrollView, Modal, FlatList } from 'react-native';
-import { View,Image, Text, Container, Left, Body, Icon, Thumbnail, ListItem, Item, Form, Input } from 'native-base';
+import { StyleSheet, TouchableOpacity, ScrollView, Modal, FlatList, Alert } from 'react-native';
+import { View, Text, Container, Left, Body, Icon, Thumbnail, ListItem, Item, Form, Input } from 'native-base';
 import { getCategories } from '../Publics/redux/actions/categories';
-import { addCategory } from '../Publics/redux/actions/categories';
+import { addCategory, deleteCategory } from '../Publics/redux/actions/categories';
 import { connect } from 'react-redux';
 
 class Drawer extends Component {
@@ -25,7 +25,7 @@ class Drawer extends Component {
         this.state = {
             name: '',
             icon: '',
-            color: '',
+            color: '7f8c8d',
             modalVisible: false
         };
     }
@@ -45,21 +45,48 @@ class Drawer extends Component {
     addCategory = () => {
         const { name, icon, color } = this.state;
         if (name !== '' && icon !== '') {
-            this.props.dispatch(addCategory({ name, icon, color }));
+            let data = {
+                'category': name,
+                'url_image': icon,
+                'color': color
+            }
+            this.props.dispatch(addCategory(data));
             this.setModal(!this.state.modalVisible); 
             this.getData();
+        } else {
+            Alert.alert(`Category and url image can't empty`)
         }
     }
 
+    longPress = (id) => {
+        Alert.alert('Alert', 'Are you sure to delete category', [
+            {
+                text: 'cancel'
+            }, {
+                text: 'ok',
+                onPress: () => {
+                    this.props.dispatch(deleteCategories(id));
+                    this.props.navigation.closeDrawer();
+                }
+            }
+        ]);
+    }
+
     renderItem = ({ item, index }) => (
-        <ListItem icon>
-            <Left><Icon name={item.image_url}/></Left>
-            <Body style={styles.body}>
-                <Text style={styles.textMenu}>
-                    {item.category}
-                </Text>
-            </Body>
-        </ListItem>
+        <TouchableOpacity 
+            longPress={() => {
+                this.longPress(item.id)
+            }}
+        >
+            <ListItem icon onLongPress={this._onLongPress}>
+                <Left><Icon name={item.image_url}/></Left>
+                <Body style={styles.body}>
+                    <Text style={styles.textMenu}>
+                        {item.category}
+                    </Text>
+                </Body>
+            </ListItem>
+        </TouchableOpacity>
     )
 
     _keyExtractor = (item, index) => item.id.toString();
@@ -109,10 +136,10 @@ class Drawer extends Component {
                                     </Item>
                                     <View style={styles.buttonBar}>
                                         <TouchableOpacity style={{marginRight: 7}} 
-                                        onPress={this.addCategory}>
-                                            <Text style={styles.btnAdd}>
-                                                Add
-                                            </Text>
+                                            onPress={this.addCategory}>
+                                                <Text style={styles.btnAdd}>
+                                                    Add
+                                                </Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => { this.setModal(!this.state.modalVisible); }}>
                                             <Text style={styles.btnCancel}>
