@@ -47,8 +47,11 @@ class Home extends Component {
     }
 
     _onRefresh = () => {
-        this.fetchData()
-      }
+        this.setState({refreshing: true});
+        fetchData().then(() => {
+            this.setState({refreshing: false});
+        });
+    }
 
     _keyExtractor = (item, index) => item.id.toString();
 
@@ -68,6 +71,7 @@ class Home extends Component {
     }
 
     render() {
+        const dataFetch = this.fetchData
         return (
             <Container>
                 <AppHeaders
@@ -98,8 +102,8 @@ class Home extends Component {
                 <ScrollView
                     refreshControl={
                         <RefreshControl
-                          refreshing={this.props.notes.isLoading}
-                          onRefresh={this.fetchData}
+                            refreshing={this.props.notes.isLoading}
+                            onRefresh={this.fetchData}
                         />
                     }
                 >

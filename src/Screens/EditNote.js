@@ -51,7 +51,7 @@ class AddNote extends Component {
             <Container>
                 <AppHeaders 
                 headerName = 'AddNote'
-                title='ADD NOTE'
+                title='EDIT NOTE'
                 leftPress={this.goBack}
                 rightPress={this._editNote}
                 />

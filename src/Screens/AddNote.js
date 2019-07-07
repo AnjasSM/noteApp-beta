@@ -11,7 +11,7 @@ class AddNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id_category: '',
+            id_category: 0,
             category: '',
             note: '',
             title: ''
@@ -41,6 +41,7 @@ class AddNote extends Component {
             }
             this.props.dispatch(addNote(data));
             this.props.navigation.navigate('HomeNote');
+            this.setState({title: '',note:'',id_category:0})
         } else {
             Alert.alert("Field Description or title cannot empty")
         }
