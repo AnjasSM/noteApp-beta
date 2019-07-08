@@ -1,6 +1,6 @@
 Nama : ANJAS SYARIFUDIN MAHARESI
 
-### NEED TO INSTALL
+### Need Before You Run This App
 
 - NodeJS v8+
 - React Native
