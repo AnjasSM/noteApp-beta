@@ -5,7 +5,8 @@ Nama : ANJAS SYARIFUDIN MAHARESI
 - NodeJS v8+
 - React Native
 - Android studio
-- sdk 
+- sdk
+- Restfull API from this [Github](https://github.com/AnjasSM/NoteApp-API) & follow instruction in that repo 
 
 ### Instalation
 
@@ -15,6 +16,8 @@ How to Run :
 $ git clone https://github.com/AnjasSM/noteApp-beta
 $ cd noteApp-beta
 $ npm install
+$ change url in /src/public/redux/actions/notes & /src/public/redux/actions/categories according to your ip address
+$ activate the server that you downloaded earlier
 $ react-native run-android
 ```
 
