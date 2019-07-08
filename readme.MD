@@ -21,6 +21,6 @@ $ activate the server that you downloaded earlier
 $ react-native run-android
 ```
 
-### Documentation APK when it Use
+### APK Documentation when it Use
 
 - youtube link [youtube](https://youtu.be/G-lVh5U-0v4)
