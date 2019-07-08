@@ -46,11 +46,10 @@ class Home extends Component {
         this.fetchData();
     }
 
-    _onRefresh = () => {
-        this.setState({refreshing: true});
-        fetchData().then(() => {
-            this.setState({refreshing: false});
-        });
+    _onRefresh = async () => {
+        await this.setState({refreshing: true})
+        await this.fetchData()
+        await this.setState({refreshing: false,page:1})
     }
 
     _keyExtractor = (item, index) => item.id.toString();
