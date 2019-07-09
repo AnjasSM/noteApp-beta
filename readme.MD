@@ -23,7 +23,7 @@ $ react-native run-android
 
 ### APK Documentation Video when it Use
 
-- youtube link [youtube](https://youtu.be/G-lVh5U-0v4)
+- youtube link [here](https://youtu.be/G-lVh5U-0v4)
 
 ### Released APK
 
