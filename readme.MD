@@ -25,6 +25,9 @@ $ react-native run-android
 
 - youtube link [youtube](https://youtu.be/G-lVh5U-0v4)
 
+### Released APK
+
+- You can Download APK in [here](https://bit.ly/2YC4NLb)
 
 ### APK Documentation Screenshot when it Use
 
